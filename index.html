@@ -1,74 +1,888 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ko">
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Nodeconf.kr-2012 : http://nodeconf.kr/2012" />
+	<head>
+		<meta charset="utf-8">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+		<title>When Hardware Met NodeJS</title>
 
-    <title>Nodeconf.kr-2012</title>
-  </head>
+		<meta name="description" content="When Hardware Met NodeJS">
+		<meta name="author" content="Kyungwook, Park">
 
-  <body>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/kyungw00k/nodeconf.kr-2012">View on GitHub</a>
+		<link rel="stylesheet" href="css/reveal.css">
 
-          <h1 id="project_title">Nodeconf.kr-2012</h1>
-          <h2 id="project_tagline">http://nodeconf.kr/2012</h2>
+		<link rel="stylesheet" type="text/css" href="css/theme/beige.css" id="theme">
+		<link rel="stylesheet" type="text/css" href="lib/css/zenburn.css" media="all">
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/kyungw00k/nodeconf.kr-2012/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/kyungw00k/nodeconf.kr-2012/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+		<style>
+     .reveal .oneliner {
+        padding-top : 12%;
+        font-size : 1.4em;
+      }
+      .reveal .oneliner h3 {
+        line-height: 1;
+      }
+      .reveal .tall {
+        margin-top: -60px;
+      }
+
+      .reveal strong {
+      	color:green;
+      }
+
+      #container {
+        background-color: #000;
+        position: absolute;
+        height: 360px;
+        width: 480px;
+        margin: 0px auto;
+        right:0;
+        top:0;
+        visibility: hidden;
+        z-index: 999;
+      }
+		</style>
+	</head>
+
+	<body>
+    <!--
+        For Demonstration Only
+    -->
+    <!--
+    <div id="container">
+        <iframe src="about:blank" width="100%" height="100%" id="localVideo" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
     </div>
+    -->
+		<div class="reveal">
+      <div class="slides">
+				<section>
+					<h1>When Hardware Met NodeJS</h1>
+					<p>
+						<small><a href="http://kyungw00k.wordpress.com">Kyungwook, Park</a> / <a href="http://twitter.com/kyungw00k">@kyungw00k</a></small>
+					</p>
+				</section>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+        <section>
+          <img src="img/nodejs-light.png" style="border:0;box-shadow:inherit"/>
+          <br />
+          <em>make web app faster</em>
+        </section>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+        <section>
+          <h2>WEB SERVER</h2>
+          <pre><code class="js" style="font-size:24px;line-height:32px;">var http = require('http');
+http.createServer(function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('Hello World\n');
+}).listen(1337, '127.0.0.1');
+console.log('Server running at http://127.0.0.1:1337/');
+</pre></code>
+        </section>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+        <!-- Arduino -->
+        <section data-markdown>
+          ## Arduino Uno($29.95)
+          <img src="img/arduino_uno.jpeg" height="370" style="border:0;box-shadow:inherit"/>
+        </section>
+
+        <section data-markdown>
+          <iframe width="640" height="360" src="http://www.youtube.com/embed/oVsDloC6DJY?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+          [MAKE Volume 25: Arduino](http://www.youtube.com/watch?v=oVsDloC6DJY)
+        </section>
+
+        <section data-markdown>
+          <iframe width="640" height="360" src="http://www.youtube.com/embed/hJIkJ9x0-JQ?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+          [The Inebriator](http://www.youtube.com/watch?v=hJIkJ9x0-JQ)
+        </section>
+
+        <section>
+          <h2>Low-cost ARM IS COMING</h2>
+          <em>with high performance</em>
+          <br />
+          <img src="img/beagle.png" width="40%" style="border:0;box-shadow:inherit"/>
+          <img src="img/rpi_logo.png" width="40%" style="border:0;box-shadow:inherit"/>
+        </section>
+
+        <section data-markdown>
+          ## BeagleBone($89)
+          <img src="img/beaglebone_detail.jpeg" height="370" style="border:0;box-shadow:inherit"/>
+        </section>
+
+        <section data-markdown>
+          <iframe width="640" height="360" src="http://www.youtube.com/embed/3RGRIS_Rqiw?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+          [Ninja Blocks use Beaglebone](http://www.youtube.com/watch?v=3RGRIS_Rqiw)
+        </section>
+
+        <section data-markdown>
+          ## Raspberry Pi($35)
+          <img src="img/RaspberryPi.jpeg" height="370" style="border:0;box-shadow:inherit"/>
+        </section>
+
+        <section data-markdown>
+          ## Raspberry Pi($35)
+          <img src="img/pi-diagram.gif" height="370" style="border:0;box-shadow:inherit"/>
+          <p><small>(Model B now ships with 512MB of RAM)</small></p>
+        </section>
+
+        <section data-markdown>
+          <iframe width="640" height="360" src="http://www.youtube.com/embed/e_mDuJuvZjI?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+          [Quake 3 on Raspberry Pi](http://www.youtube.com/watch?v=e_mDuJuvZjI)
+        </section>
+
+        <section data-markdown class="oneliner">
+          <q>What if these hardware can be controlled by nodeJS?</q>
+        </section>
+
+        <section class="oneliner">
+          <q>If so, it could be easy to control hardware from website!</q>
+        </section>
+
+        <section data-markdown>
+          <iframe width="640" height="360" src="https://www.youtube.com/embed/va7j86thW5M?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+          [Real-time Charting with HTML5](https://www.youtube.com/watch?v=va7j86thW5M)
+        </section>
+
+        <section>
+          <img src="img/awesome2.jpeg" height="500" style="border:0;box-shadow:inherit"/>
+        </section>
+
+        <section class="oneliner">
+          <h2>So, how are they hook up with nodeJS?</h2>
+        </section>
+
+				<section>
+          <section class="oneliner">
+            <h2>Arduino + NodeJS</h2>
+            <h1>↓</h1>
+          </section>
+
+					<section>
+						<img src="img/Hmm+should+I+tell+you+where+that+s+from+getting+a+.jpeg" height="500" style="border:0;box-shadow:inherit"/>
+					</section>
+
+					<section data-markdown class="oneliner">
+						## OK, LED FIRST
+						<h1>↓</h1>
+					</section>
+
+					<section data-markdown>
+						<img src="img/led.ps.png" height="500" style="border:0;box-shadow:inherit"/>
+					</section>
+
+					<section data-markdown class="oneliner">
+						### Make arduino skitch(code) first!
+						<h1>↓</h1>
+					</section>
+
+					<section>
+						<h2>Upload skitch to arduino</h2>
+    <pre><code class="cpp" style="font-size:16px;line-height:16px;">void setup() {
+ Serial.begin(9600);
+
+ // initialize the digital pin as an output.
+ // Pin 13 has an LED connected on most Arduino boards:
+ pinMode(13, OUTPUT);
+}
+
+void loop() {
+  int incomingValue = 0;           // from nodeJS
+
+  if ( Serial.available() > 0 ) {  // check the incoming value
+    incomingValue = Serial.read();
+  }
+
+  if ( incomingValue == 49 ) {     // if the value is '1'
+    digitalWrite(13, HIGH);        // turn on the light
+  }
+
+  if ( incomingValue == 48 ) {     // if the value is '0'
+    digitalWrite(13, LOW);         // turn off the light
+  }
+}</code></pre>
+					</section>
+
+					<section data-markdown class="oneliner">
+						### Then, make 어썸 JavaScript
+						<h1>↓</h1>
+					</section>
+
+					<section data-markdown>
+						### Open the device ...
+
+    var fs = require('fs');
+
+    //
+    // Open /dev/tty-usbserial1
+    //
+    fs.open('/dev/tty-usbserial1', 'a', 666, function( e, fd ) {
+        //
+        // must do something, huh?
+        //
+    });
+					</section>
+
+					<section data-markdown>
+						### Send '1' to arduino
+    var fs = require('fs');
+    fs.open('/dev/tty-usbserial1', 'a', 666, function( e, fd ) {
+        //
+        // send '1'
+        //
+        fs.write( fd, '1', null, null, null, function(){
+            //
+            // do something, maybe
+            //
+        }
+    });
+					</section>
+
+					<section data-markdown>
+						### and close...
+    var fs = require('fs');
+
+    fs.open('/dev/tty-usbserial1', 'a', 666, function( e, fd ) {
+        fs.write( fd, '1', null, null, null, function(){
+            //
+            // close the connection
+            //
+            fs.close(fd, function() {
+                //
+	            // do something? really?
+	            //
+            });
+        }
+    });
+					</section>
+
+          <section data-markdown>
+            <iframe width="640" height="360" src="http://www.youtube.com/embed/-8nx8C8vsro?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+          </section>
+
+					<section>
+						<em>fs.open... fs.write... fs.close...</em>
+						<br />
+						<br />
+						<h2 class="fragment"><img src="img/really.gif" width="100%" style="border:0;box-shadow:inherit"/></h2>
+					</section>
+
+          <section data-state="soothe" data-markdown class="oneliner">
+            <h1>Use the modules!</h1>
+            <em class="fragment">Dude, it's the 21 century.</em>
+          </section>
+
+          <section data-markdown>
+            <img src="img/hmm2.jpeg" height="500" style="border:0;box-shadow:inherit"/>
+          </section>
+
+          <section data-markdown class="oneliner">
+            ## Hey, it's so many!
+            <em class="fragment">choose some well-known</em>
+          </section>
+
+          <section data-markdown>
+            <img src="img/nodejs-arduino-module-ranking.png" width="100%" height="500" style="border:0;box-shadow:inherit"/>
+          </section>
+
+          <section data-markdown class="oneliner">
+            ## OK Then, LED Again
+            <h1>↓</h1>
+          </section>
+
+          <section data-markdown>
+            <img src="img/led.ps.png" height="500" style="border:0;box-shadow:inherit"/>
+          </section>
+
+          <section data-markdown class="oneliner">
+            ## Install duino module
+            <br />
+            <p><em>npm install duino</em></p>
+          </section>
+
+          <section data-markdown>
+            ## Upload skitch to arduino
+            [https://github.com/ecto/duino/blob/master/src/du.ino](https://github.com/ecto/duino/blob/master/src/du.ino)
+<pre><code style="font-size:18px;line-height:18px;">#include &lt;Servo.h&gt;
+
+bool debug = false;
+
+int index = 0;
+
+char messageBuffer[12];
+char cmd[3];
+char pin[3];
+char val[4];
+char aux[4];
+
+Servo servo;
+
+void setup() {
+  Serial.begin(115200);
+}
+
+void loop() {
+  while(Serial.available() > 0) {
+    char x = Serial.read();
+    if (x == '!') index = 0;      // start
+    else if (x == '.') process(); // end
+    else messageBuffer[index++] = x;
+  }
+}
+
+/*
+ * Deal with a full message and determine function to call
+ */
+void process() {
+  index = 0;
+
+  strncpy(cmd, messageBuffer, 2);
+  cmd[2] = '\0';
+  strncpy(pin, messageBuffer + 2, 2);
+  pin[2] = '\0';
+
+  if (atoi(cmd) > 90) {
+    strncpy(val, messageBuffer + 4, 2);
+    val[2] = '\0';
+    strncpy(aux, messageBuffer + 6, 3);
+    aux[3] = '\0';
+  } else {
+    strncpy(val, messageBuffer + 4, 3);
+    val[4] = '\0';
+    strncpy(aux, messageBuffer + 7, 3);
+    aux[4] = '\0';
+  }
+
+  if (debug) {
+    Serial.println(messageBuffer);
+  }
+  int cmdid = atoi(cmd);
+
+  // Serial.println(cmd);
+  // Serial.println(pin);
+  // Serial.println(val);
+  // Serial.println(aux);
+
+  switch(cmdid) {
+    case 0:  sm(pin,val);              break;
+    case 1:  dw(pin,val);              break;
+    case 2:  dr(pin,val);              break;
+    case 3:  aw(pin,val);              break;
+    case 4:  ar(pin,val);              break;
+    case 97: handlePing(pin,val,aux);  break;
+    case 98: handleServo(pin,val,aux); break;
+    case 99: toggleDebug(val);         break;
+    default:                           break;
+  }
+}
+
+/*
+ * Toggle debug mode
+ */
+void toggleDebug(char *val) {
+  if (atoi(val) == 0) {
+    debug = false;
+    Serial.println("goodbye");
+  } else {
+    debug = true;
+    Serial.println("hello");
+  }
+}
+
+/*
+ * Set pin mode
+ */
+void sm(char *pin, char *val) {
+  if (debug) Serial.println("sm");
+  int p = getPin(pin);
+  if(p == -1) { if(debug) Serial.println("badpin"); return; }
+  if (atoi(val) == 0) {
+    pinMode(p, OUTPUT);
+  } else {
+    pinMode(p, INPUT);
+  }
+}
+
+/*
+ * Digital write
+ */
+void dw(char *pin, char *val) {
+  if (debug) Serial.println("dw");
+  int p = getPin(pin);
+  if(p == -1) { if(debug) Serial.println("badpin"); return; }
+  pinMode(p, OUTPUT);
+  if (atoi(val) == 0) {
+    digitalWrite(p, LOW);
+  } else {
+    digitalWrite(p, HIGH);
+  }
+}
+
+/*
+ * Digital read
+ */
+void dr(char *pin, char *val) {
+  if (debug) Serial.println("dr");
+  int p = getPin(pin);
+  if(p == -1) { if(debug) Serial.println("badpin"); return; }
+  pinMode(p, INPUT);
+  int oraw = digitalRead(p);
+  char m[7];
+  sprintf(m, "%02d::%02d", p,oraw);
+  Serial.println(m);
+}
+
+/*
+ * Analog read
+ */
+void ar(char *pin, char *val) {
+  if(debug) Serial.println("ar");
+  int p = getPin(pin);
+  if(p == -1) { if(debug) Serial.println("badpin"); return; }
+  pinMode(p, INPUT); // don't want to sw
+  int rval = analogRead(p);
+  char m[8];
+  sprintf(m, "%s::%03d", pin, rval);
+  Serial.println(m);
+}
+
+void aw(char *pin, char *val) {
+  if(debug) Serial.println("aw");
+  int p = getPin(pin);
+  pinMode(p, OUTPUT);
+  if(p == -1) { if(debug) Serial.println("badpin"); return; }
+  analogWrite(p,atoi(val));
+}
+
+int getPin(char *pin) { //Converts to A0-A5, and returns -1 on error
+  int ret = -1;
+  if(pin[0] == 'A' || pin[0] == 'a') {
+    switch(pin[1]) {
+      case '0':  ret = A0; break;
+      case '1':  ret = A1; break;
+      case '2':  ret = A2; break;
+      case '3':  ret = A3; break;
+      case '4':  ret = A4; break;
+      case '5':  ret = A5; break;
+      default:             break;
+    }
+  } else {
+    ret = atoi(pin);
+    if(ret == 0 && (pin[0] != '0' || pin[1] != '0')) {
+      ret = -1;
+    }
+  }
+  return ret;
+}
+
+/*
+ * Handle Ping commands
+ * fire, read
+ */
+void handlePing(char *pin, char *val, char *aux) {
+  if (debug) Serial.println("ss");
+  int p = getPin(pin);
+
+  if(p == -1) { if(debug) Serial.println("badpin"); return; }
+  Serial.println("got signal");
+
+  // 01(1) Fire and Read
+  if (atoi(val) == 1) {
+    char m[16];
+
+    pinMode(p, OUTPUT);
+    digitalWrite(p, LOW);
+    delayMicroseconds(2);
+    digitalWrite(p, HIGH);
+    delayMicroseconds(5);
+    digitalWrite(p, LOW);
+
+    Serial.println("ping fired");
+
+    pinMode(p, INPUT);
+    sprintf(m, "%s::read::%08d", pin, pulseIn(p, HIGH));
+    Serial.println(m);
+
+    delay(50);
+  }
+}
+
+/*
+ * Handle Servo commands
+ * attach, detach, write, read, writeMicroseconds, attached
+ */
+void handleServo(char *pin, char *val, char *aux) {
+  if (debug) Serial.println("ss");
+  int p = getPin(pin);
+  if(p == -1) { if(debug) Serial.println("badpin"); return; }
+  Serial.println("signal: servo");
+
+  // 00(0) Detach
+  if (atoi(val) == 0) {
+    servo.detach();
+    char m[12];
+    sprintf(m, "%s::detached", pin);
+    Serial.println(m);
+
+  // 01(1) Attach
+  } else if (atoi(val) == 1) {
+    // servo.attach(p, 750, 2250);
+    servo.attach(p);
+    char m[12];
+    sprintf(m, "%s::attached", pin);
+    Serial.println(m);
+
+  // 02(2) Write
+  } else if (atoi(val) == 2) {
+    Serial.println("writing to servo");
+    Serial.println(atoi(aux));
+    // Write to servo
+    servo.write(atoi(aux));
+    delay(15);
+
+    // TODO: Experiment with microsecond pulses
+    // digitalWrite(pin, HIGH);   // start the pulse
+    // delayMicroseconds(pulseWidth);  // pulse width
+    // digitalWrite(pin, LOW);    // stop the pulse
+
+  // 03(3) Read
+  } else if (atoi(val) == 3) {
+    Serial.println("reading servo");
+    int sval = servo.read();
+    char m[13];
+    sprintf(m, "%s::read::%03d", pin, sval);
+    Serial.println(m);
+  }
+}
 </code></pre>
+          </section>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+          <section data-markdown class="oneliner">
+            ## Then, make <strong>AWESOME</strong> JavaScript
+            <h1>↓</h1>
+          </section>
 
-<h3>Designer Templates</h3>
+          <section data-markdown>
+            ## LED blinking
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+    var arduino = require('duino'),
+        board = new arduino.Board();
 
-<h3>Rather Drive Stick?</h3>
+    var led = new arduino.Led({
+      board: board,
+      pin: 13
+    });
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+    led.blink();
+          </section>
 
-<h3>Authors and Contributors</h3>
+          <section data-markdown>
+            <iframe width="640" height="360" src="http://www.youtube.com/embed/Q29SMYvL22w?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+          </section>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+          <section class="oneliner">
+            <em>no <strong>fs.XXXX</strong></em>
+            <br />
+            <br />
+            <em  class="fragment">quite simple and elegant way</em>
+          </section>
 
-<h3>Support or Contact</h3>
+          <section data-markdown>
+            <img src="img/uncle_bob.jpeg" height="400" style="border:0;box-shadow:inherit"/>
+            <br /><em>easy, huh?</em>
+          </section>
+				</section>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
+        <section>
+          <section class="oneliner">
+            <h2>BeagleBone + NodeJS</h2>
+            <h1>↓</h1>
+          </section>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Nodeconf.kr-2012 maintained by <a href="https://github.com/kyungw00k">kyungw00k</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
+          <section>
+            <img src="img/Hmm+should+I+tell+you+where+that+s+from+getting+a+.jpeg" height="500" style="border:0;box-shadow:inherit"/>
+          </section>
 
-    
+          <section>
+            <h2>First Steps</h2>
+            <ol>
+              <li class="fragment">Buy SDCARD</li>
+              <li class="fragment">Copy Pre-installed image into SDCARD</li>
+              <li class="fragment">Power On</li>
+              <li class="fragment"><strong>Open Browser</strong></li>
+            </ol>
+          </section>
 
-  </body>
+          <section class="oneliner">
+            <h2>PRE-INSTALLED nodeJS</h2>
+            <h1 class="framgment"><strong>AND Cloud9 IDE</strong></h1>
+            <p><small>it's running now!</small></p>
+          </section>
+
+          <section data-markdown class="oneliner">
+            ## OK, LED FIRST(AGAIN)
+            <h1>↓</h1>
+          </section>
+
+          <section data-markdown>
+            <img src="img/bone_led.png" height="500" style="border:0;box-shadow:inherit"/>
+          </section>
+
+          <section data-markdown>
+            ## BoneScript
+
+    require('bonescript');
+
+    ledPin = bone.P8_3;
+
+    setup = function() {
+      pinMode(ledPin, OUTPUT);
+    };
+
+    loop = function() {
+      digitalWrite(ledPin, HIGH);
+      delay(1000);
+      digitalWrite(ledPin, LOW);
+      delay(1000);
+    };
+          </section>
+          <section>
+            <h2>BoneScript</h2>
+            <iframe width="640" height="360" src="http://www.youtube.com/embed/xEVwqFBMDLE?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+          </section>
+
+          <section>
+            <img src="img/uncle_bob.jpeg" height="400" style="border:0;box-shadow:inherit"/>
+            <br /><em>easy, huh?</em>
+          </section>
+        </section>
+
+        <section>
+          <section class="oneliner">
+            <h2>Raspberry Pi + NodeJS</h2>
+            <h1>↓</h1>
+          </section>
+
+
+          <section>
+            <img src="img/Hmm+should+I+tell+you+where+that+s+from+getting+a+.jpeg" height="500" style="border:0;box-shadow:inherit"/>
+          </section>
+
+          <section>
+            <h2>First Steps</h2>
+            <ol>
+              <li class="fragment">Buy SDCARD</li>
+              <li class="fragment">Copy Pre-installed image into SDCARD</li>
+              <li class="fragment">Power On</li>
+              <li class="fragment">Install NodeJS</li>
+              <li class="fragment">(And something more)</li>
+            </ol>
+          </section>
+
+          <!--
+            http://nodejsmodules.org/tags/gpio
+          -->
+          <section data-markdown>
+            ## rpi-gpio
+            <img src="img/gpio_modules.png" height="421" style="border:0;box-shadow:inherit"/>
+            [https://github.com/JamesBarwell/rpi-gpio.js](https://github.com/JamesBarwell/rpi-gpio.js)
+          </section>
+
+          <section data-markdown class="oneliner">
+            ## OK, LED FIRST(AND AGAIN)
+            <h1>↓</h1>
+          </section>
+
+          <section data-markdown>
+            <img src="img/pi_led.ps.png" height="500" style="border:0;box-shadow:inherit"/>
+          </section>
+
+          <section data-markdown>
+            ## rpi-gpio
+
+    var gpio = require('rpi-gpio');
+
+    gpio.setup(17, gpio.DIR_OUT, write);
+
+    function write() {
+      gpio.write(17, true, function(err) {
+        if (err) throw err;
+
+        console.log('Written to pin');
+      });
+    }
+          </section>
+
+          <section>
+            <img src="img/uncle_bob.jpeg" height="400" style="border:0;box-shadow:inherit"/>
+            <br /><em>easy, huh?</em>
+          </section>
+        </section>
+
+        <!-- SUMMARY -->
+        <section class="oneliner">
+          <q><small>These hardware make you prototyping easily!</small></q>
+          <br /><br />
+          <em class="fragment">so...</em>
+          <br /><br />
+          <h2 class="fragment">DON'T BE AFRAID</h2>
+          <h1 class="fragment"><strong>TO BUY ONE</strong></h1>
+        </section>
+
+        <section data-markdown>
+          ## Making Things Fun with nodeJS!
+          <img src="img/shutterstock_589138541.jpeg" height="474" style="border:0;box-shadow:inherit"/>
+          <br />
+        </section>
+
+        <section data-markdown class="oneliner">
+          ## Questions?
+          <img src="img/confusing.jpg" style="border:0;box-shadow:inherit"/>
+        </section>
+
+        <section>
+          <section class="oneliner">
+            <h1>My Arduino RC Project!</h1>
+          </section>
+
+          <section>
+            <h2>BUY A CAR FIRST</h2>
+            <img src="img/cooper1.jpg" height="500" style="border:0;box-shadow:inherit"/>
+          </section>
+
+          <section>
+            <h2>RE-ASSEMBLE IT</h2>
+            <img src="img/cooper3.png" height="500" style="border:0;box-shadow:inherit"/>
+          </section>
+
+          <section>
+            <h2>Ooops..</h2>
+            <img src="img/ddc_track1.jpg" height="441" style="border:0;box-shadow:inherit"/>
+          </section>
+
+          <section>
+            <h2>TA;DA</h2>
+            <a href="#nothingInHere"><img src="img/ddc_track2.jpg" height="441" style="border:0;box-shadow:inherit"/></a>
+          </section>
+        </section>
+
+        <section>
+         <section data-markdown class="oneliner">
+            ## Which one is better?
+            <img src="img/_DSC7090.jpeg" height="400" style="border:0;box-shadow:inherit"/>
+          </section>
+
+          <section>
+            <img src="img/Hmm+should+I+tell+you+where+that+s+from+getting+a+.jpeg" height="500" style="border:0;box-shadow:inherit"/>
+          </section>
+
+          <section>
+            <img src="img/comparison.png" height="474" style="border:0;box-shadow:inherit"/>
+            <p><small><em>Model B now ships with 512MB of RAM!</em></small></p>
+          </section>
+
+          <section>
+            <h1>It's up to you</h1>
+          </section>
+
+        </section>
+
+        <section>
+          <section data-markdown class="oneliner">
+            ## Where can I buy these thing?
+            <img src="img/_DSC7090.jpeg" height="400" style="border:0;box-shadow:inherit"/>
+          </section>
+
+          <section data-markdown class="oneliner">
+            ### These sites might help you!
+            * [Arduino](http://arduino.cc/en/Main/Buy)
+            * [Element14](http://element14.com)
+            * [Adafruit](http://adafruit.com)
+            * [ICBank](http://icbank.com)
+          </section>
+        </section>
+
+        <section data-markdown>
+          # THANKS
+          <small class="footer">♥ [reveal.js](http://lab.hakim.se/reveal-js/) ♥</small>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+				history: true,
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					//{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+    <!--
+      From https://apprtc.appspot.com
+    -->
+    <!--
+    <script type="text/javascript">
+      /*
+      var localVideo = document.getElementById("localVideo")
+        , container = document.getElementById("container");
+
+      //
+      // Toggling Video Area
+      //
+      
+      document.addEventListener( 'keyup', function(event){
+          switch( event.keyCode ) {
+            // 'v'
+           case 86 :
+                var isVideoEnabled = container.style.visibility === 'visible';
+
+                if ( isVideoEnabled ) {
+                  container.style.visibility = 'hidden';
+                  localVideo.src="about:blank";
+                } else {
+                  localVideo.src="./video.html";
+                  container.style.visibility = 'visible';
+                }
+          }
+      }, false );
+      */
+    </script>
+    -->
+
+    <!-- Twitter Sharing -->
+		<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
+		<div class="share-reveal" style="position: absolute; bottom: 10px; left: 50%; margin-left: -205px; z-index: 20;">
+			<a href="http://twitter.com/share" class="twitter-share-button" data-text="When Hardware Met NodeJS from @kyungw00k" data-url="" data-count="small" data-related="@kyungw00k"></a>
+
+			<a href="https://twitter.com/kyungw00k" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @kyungw00k</a>
+		</div>
+	</body>
 </html>

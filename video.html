@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<title>Video View using WebRTC</title>
+
+		<meta name="description" content="NodeJS와 하드웨어의 만남">
+		<meta name="author" content="Kyungwook, Park">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<style type="text/css">
+			html, body {
+				background-color: #000000;
+				height: 100%;
+				font-family:Verdana, Arial, Helvetica, sans-serif;
+			}
+			body {
+				margin: 0;
+				padding: 0;
+			}
+			#container {
+				background-color: #000000;
+				position: relative;
+				min-height: 100%;
+				width: 100%;
+				margin: 0px auto;
+				-webkit-perspective: 1000;
+			}
+			#localVideo {
+				opacity: 0;
+				-webkit-transition-property: opacity;
+				-webkit-transition-duration: 2s;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--
+			Video View using WebRTC
+
+			Reference
+			- http://www.webrtc.org/reference/getting-started
+			- http://www.html5rocks.com/en/tutorials/webrtc/basics/
+		-->
+		<div id="container">
+			<video width="100%" height="100%" id="localVideo" autoplay="autoplay" />
+		</div>
+
+		<!--
+			From https://apprtc.appspot.com
+		-->
+		<script type="text/javascript">
+			var localVideo = document.getElementById("localVideo")
+			  , localStream;
+
+			function getUserMedia() {
+				try {
+					navigator.webkitGetUserMedia({'audio':true, 'video':true}, onUserMediaSuccess, onUserMediaError);
+					console.log("Requested access to local media with new syntax.");
+				} catch (e) {
+					try {
+						navigator.webkitGetUserMedia("video,audio", onUserMediaSuccess, onUserMediaError);
+						console.log("Requested access to local media with old syntax.");
+					} catch (e) {
+						alert("webkitGetUserMedia() failed. Is the MediaStream flag enabled in about:flags?");
+						console.log("webkitGetUserMedia failed with exception: " + e.message);
+					}
+				}
+			}
+
+			function onUserMediaSuccess(stream) {
+				console.log("User has granted access to local media.");
+				var url = webkitURL.createObjectURL(stream);
+
+				localVideo.style.opacity = 1;
+				localVideo.src = url;
+				localStream = stream;
+			}
+
+			function onUserMediaError(error) {
+				console.log("Failed to get access to local media. Error code was " + error.code);
+				alert("Failed to get access to local media. Error code was " + error.code + ".");
+			}
+
+			getUserMedia();
+		</script>
+	</body>
+</html>
