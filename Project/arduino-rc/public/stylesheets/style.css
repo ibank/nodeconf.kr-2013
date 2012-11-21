@@ -1,0 +1,115 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.hidden{
+    display:none;
+}
+
+.wrap {
+    width: 100%;
+}
+#welcome {
+    background: url(../images/index_v1.png) no-repeat top center;
+}
+#welcome .btn_area {
+    padding-top: 310px;
+    text-align: center;
+}
+
+#welcome .copy {
+    color:#fff;
+    text-align: center;
+}
+
+#howto #rotateF {
+    text-align: center;
+}
+#game .control_btn{
+    width: 20%;
+    height:20%;
+    color: #484848;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #fff;
+    font: bold 12px Helvetica, Arial, sans-serif;
+    line-height: 50px;
+    display: block;
+    margin:0 auto;
+    padding: 0 10px;
+    background: #f0f0f0;
+    background: -webkit-linear-gradient(top, #f7f7f7, #d1d1d1);
+    background: -moz-linear-gradient(top, #f7f7f7, #d1d1d1);
+    background: -ms-linear-gradient(top, #f7f7f7, #d1d1d1);
+    background: -o-linear-gradient(top, #f7f7f7, #d1d1d1);
+    border: solid 1px #7f7f7f;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background: -webkit-gradient(linear, left top, left bottom, from(#d8d8d8), color-stop(0.15, #c6c6c6), to(a8a8a8));
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=90, Color='#ffffff')";
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=90, Color='#ffffff');
+    -webkit-transition: border-color .218s;
+    -moz-transition: border .218s;
+    -o-transition: border-color .218s;
+    transition: border-color .218s;
+}
+#game .control_btn:hover {
+    border: solid 1px #333;
+    color: #282828;
+    background: -webkit-linear-gradient(top, #ffffff, #dfdfdf);
+    background: -moz-linear-gradient(top, #ffffff, #dfdfdf);
+    background: -ms-linear-gradient(top, #ffffff, #dfdfdf);
+    background: -o-linear-gradient(top, #ffffff, #dfdfdf);
+}
+#game .control_btn:active {
+    border: solid 1px #7f7f7f;
+    background: #d0d0d0;
+    background: -webkit-gradient(linear, left top, left bottom, from(#a8a8a8), color-stop(0.15, #c6c6c6), to(#d8d8d8));
+    background: -webkit-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+    background: -moz-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+    background: -ms-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+    background: -o-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+}
+
+#game .control_btn span {
+    display: block;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    padding: 25% 0;
+    text-align: center;
+	font: bold 30px/30px Lucida Grande,Helvetica,Arial,sans-serif;
+}
+
+#game #btnForAndroid {
+    width:100%;
+    height: 90%;
+    position:relative;
+}
+#game .leftBtn, #game #btnForios .downBtn{
+   float:left;
+}
+#game .rightBtn, #game #btnForios .topBtn{
+    float:right;
+}
+#game #btnForios .c2 {
+    margin-top:15px;
+}
+#game .topBtn{
+
+}
+#game .downBtn{
+
+}
+#game #btnForAndroid p{
+ clear:both;
+}
+

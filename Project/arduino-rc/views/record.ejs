@@ -1,0 +1,15 @@
+<!-- 결과 -->
+<div data-role="page" id="record" class="wrap">
+	<div data-role="header">
+		<h1>FINISH</h1>
+	</div>
+	<div data-role="content" style="text-align:center">
+		<h2 id="result">
+		<script type="text/javascript">
+			
+			$('#result').text( window.lapTime ? (window.lapTime+'s') : 'disconnected' );
+		</script>
+		</h2>
+		<a href="http://ddc.daum.net" onclick="socket.emit('like');socket.emit('disconnect');"><img src="/images/like.png" alt=""/></a>
+	</div>
+</div>

@@ -1,0 +1,44 @@
+<!-- 게임 -->
+<div data-role="page" id="game" class="wrap">
+	<div data-role="header">
+		<h1>PLAY</h1>
+		<a href="/rank" id="stopLayer" style="display:none" data-role="button" onclick="endRace();">그만하기</a>
+	</div>
+	<div data-role="content">
+		<dl id="timer" style="display:none">
+			<dt>LAB TIME</dt>
+			<dd id="labtime"></dd>
+		</dl>
+		<div id="readyLayer">
+			<button type="button" onclick="setReady();">시작!</button>
+		</div>
+
+		<div id="stopLayer" style="display:none">
+		</div>
+		
+		<div id="controllerWrap" style="display:none">
+			<div id="controller">
+				<% if ( ( platform.iphone || platform.ipad ) ) { %>
+   	          <div id="btnForIos">
+   	           <p class="c2">
+  	               <a class="topBtn" style="display:none"><span>▲</span></a>
+   	               <a class="downBtn" style="display:none"><span>▼</span></a>
+   	               <a class="leftBtn control_btn"><span>◀</span></a>
+   	               <a class="rightBtn control_btn"><span>▶</span></a>
+   	           </p>
+             </div>
+				<% } else { %>
+				<div id="btnForAndroid">
+   	              <p class="c1"><a class="topBtn control_btn"><span>▲</span></a></p>
+   	              <p class="c2">
+   	                 <a class="leftBtn control_btn"><span>◀</span></a>
+   	                 <a class="rightBtn control_btn"><span>▶</span></a>
+   	              </p>
+   	              <p class="c3"><a class="downBtn control_btn"><span>▼</span></a></p>
+   	          </div>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</div>
+

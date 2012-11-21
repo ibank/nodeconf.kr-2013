@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<title>Arduino RC</title>
+	<script src="/socket.io/socket.io.js"></script>
+	<link rel="stylesheet" href="/stylesheets/jquery.mobile-1.0rc1.min.css" />
+	<link rel="stylesheet" href="/stylesheets/style.css" />
+	<script type="text/javascript" src="/javascripts/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="/javascripts/jquery.mobile-1.0rc1.min.js"></script>
+	<script type="text/javascript" src="/javascripts/jquery.ba-hashchange.1.3.min.js"></script>
+</head>
+<body>
+<%- body %>
+<script type="text/javascript">
+window.isStart = false;
+window.intervalTimer = null;
+window.carObject = null;
+
+var socket = io.connect(':9999/');
+
+socket.on('ready', function (data) {
+	isStart = true;	
+});
+
+socket.on('car selected', function(){
+	console.log('client car object initialized');
+	carObject = new carDeviceHandler();
+});
+
+socket.on('end', function() {
+	$('#stopLayer').click();
+});
+
+socket.on('set result', function(data) {
+	window.lapTime = data.lapTime;
+});
+
+function carDeviceHandler(){
+    var self = this;
+    var isDown = false;
+    
+    var ButtonStatus = {
+        UP : null
+      , LT : null
+      , RT : null
+      , DN : null
+    };
+
+	this.timer = null;
+
+    this.setButtonStatus = function(e){
+        var button = e.data.button;
+        var status = e.data.status;
+        ButtonStatus[button] = status;
+        //self.sendMessage();
+    };
+    
+    this.addEvent = function() {
+		$("#controllerWrap").bind('touchstart',function(e){
+			e.preventDefault();
+			e.stopPropagation();
+		});
+
+        $("#controller .topBtn").bind("touchstart", { button : "UP", status : "DOWN"}, self.setButtonStatus);
+        $("#controller .topBtn").bind("touchend", { button : "UP", status : null}, self.setButtonStatus);
+        $("#controller .topBtn").bind("mousedown", { button : "UP", status : "DOWN"}, self.setButtonStatus);
+        $("#controller .topBtn").bind("mouseup", { button : "UP", status : null}, self.setButtonStatus);
+
+        $("#controller .downBtn").bind("touchstart", { button : "DN", status : "DOWN"}, self.setButtonStatus);
+        $("#controller .downBtn").bind("touchend", { button : "DN", status : null}, self.setButtonStatus);
+        $("#controller .downBtn").bind("mousedown", { button : "DN", status : "DOWN"}, self.setButtonStatus);
+        $("#controller .downBtn").bind("mouseup", { button : "DN", status : null}, self.setButtonStatus);
+
+        $("#controller .leftBtn").bind("touchstart", { button : "LT", status : "DOWN"}, self.setButtonStatus);
+        $("#controller .leftBtn").bind("touchend", { button : "LT", status : null}, self.setButtonStatus);
+        $("#controller .leftBtn").bind("mousedown", { button : "LT", status : "DOWN"}, self.setButtonStatus);
+        $("#controller .leftBtn").bind("mouseup", { button : "LT", status : null}, self.setButtonStatus);
+
+        $("#controller .rightBtn").bind("touchstart", { button : "RT", status : "DOWN"}, self.setButtonStatus);
+        $("#controller .rightBtn").bind("touchend", { button : "RT", status : null}, self.setButtonStatus);
+        $("#controller .rightBtn").bind("mousedown", { button : "RT", status : "DOWN"}, self.setButtonStatus);
+        $("#controller .rightBtn").bind("mouseup", { button : "RT", status : null}, self.setButtonStatus);
+    };
+
+    this.removeEvent = function() {
+        $("#controller .topBtn").unbind();
+        $("#controller .downBtn").unbind();
+        $("#controller .leftBtn").unbind();
+        $("#controller .rightBtn").unbind();
+    };
+
+    this.run = function(){
+		this.addEvent();
+        if(!this.timer){
+            this.timer = window.setInterval((function(self){
+                return function(){
+                    self.sendMessage();
+                };
+            })(self), 100);
+        }
+    };
+
+    this.sendMessage = function(){
+		if ( ButtonStatus.UP ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'UP' });
+		} else if ( ButtonStatus.DN ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'DN' });
+		} else if ( !ButtonStatus.UP && !ButtonStatus.DN ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'ST' });
+		}
+
+		if ( ButtonStatus.LT ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'LT' });
+		} else if ( ButtonStatus.RT ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'RT' });
+		} else if ( !ButtonStatus.LT && !ButtonStatus.RT ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'CT' });
+		}
+		/*
+		if ( ButtonStatus.UP && ButtonStatus.LT ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'UP' });
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'LT' });
+		} else if ( ButtonStatus.UP && ButtonStatus.RT ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'UR' });
+		} else if ( ButtonStatus.UP ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'UP' });
+		} else if ( ButtonStatus.DN && ButtonStatus.LT ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'DL' });
+		} else if ( ButtonStatus.DN && ButtonStatus.RT ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'DR' });
+		} else if ( ButtonStatus.DN ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'DN' });
+		} else if ( ButtonStatus.LT ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'LT' });
+		} else if ( ButtonStatus.RT ) {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'RT' });
+		} else {
+			socket.emit('direction', { id : socket.socket.sessionid, direction : 'ST' });
+		} */
+    };
+
+
+    this.motionListener = function(e) {
+        var event = e.accelerationIncludingGravity,
+            x = event.x,
+            y = event.y;
+/*
+		if ( x < -2 ) { // LT
+			if ( y < -2 ) { // UP
+				socket.emit('direction', { id : socket.socket.sessionid, direction : 'DL' });
+			} else if ( y > 2 ) { // DOWN
+				socket.emit('direction', { id : socket.socket.sessionid, direction : 'UL' });
+			} else {
+				socket.emit('direction', { id : socket.socket.sessionid, direction : 'LT' });
+			}
+		} else if ( x > 2 ) { // RT
+			if ( y < -2 ) { // UP
+				socket.emit('direction', { id : socket.socket.sessionid, direction : 'DR' });
+			} else if ( y > 2 ) { // DOWN
+				socket.emit('direction', { id : socket.socket.sessionid, direction : 'UR' });
+			} else {
+				socket.emit('direction', { id : socket.socket.sessionid, direction : 'RT' });
+			}
+		} else {
+			if ( y < -2 ) { // UP
+				socket.emit('direction', { id : socket.socket.sessionid, direction : 'DN' });
+			} else if ( y > 2 ) { // DOWN
+				socket.emit('direction', { id : socket.socket.sessionid, direction : 'UP' });
+			} else {
+				socket.emit('direction', { id : socket.socket.sessionid, direction : 'ST' });
+			}
+		}
+	*/
+	
+	// 	if(window.outerWidth > window.outerHeight) {
+		ButtonStatus['LT'] = x < -2 ? 'DOWN' : null;
+		ButtonStatus['RT'] = x > 2 ? 'DOWN' : null;
+		ButtonStatus['UP'] = y > 2 ? 'DOWN' : null;
+		ButtonStatus['DN'] = y < -2 ? 'DOWN' : null;
+
+		//self.sendMessage();
+    };
+
+    this.destroy = function(){
+        clearInterval(self.timer);
+        self.timer = null;
+        self.removeEvent();
+    };
+
+    this.start = function(){
+		window.addEventListener("devicemotion",self.motionListener,false);
+		self.run();
+    };
+
+    this.end = function(){
+		window.removeEventListener("devicemotion",self.motionListener);
+        socket.emit('direction', { id : socket.socket.sessionid, direction : 'ST' });
+        self.destroy();
+    };
+}
+
+function selectCar(type) {
+	socket.emit('selectCar', {type : type});
+}
+
+// 시작시 
+function startRace(){
+	$('#readyLayer').show();
+	$('#stopLayer').hide();
+	$('#timer').hide();
+	$('#labtime').text('00:00:00');
+}
+
+// 종료시
+function endRace() {
+	carObject.end();
+	endTimer();
+	isStart = false;
+
+	socket.emit('end race', {
+		lapTime : $('#labtime').text()
+	});
+	window.lapTime = $('#labtime').text();
+	$('#timer').hide();
+}
+
+// 렝킹 받아오기
+function getRank(){
+	socket.emit('get rank');
+}
+
+// Ready 신호 보내기
+function setReady() {
+	carObject.start();
+	socket.emit('set ready', { id : socket.socket.sessionid });
+	$('#readyLayer').hide();
+	$('#controllerWrap').show();
+	$('#stopLayer').show();
+	startTimer();
+}
+
+function startTimer() {
+	$('#labtime').text('00:00:00');
+	$('#timer').show();
+	var start = new Date();
+
+	intervalTimer = setInterval(function() {
+		var time = parseInt((new Date - start) / 10,10)
+		  , mil 
+		  , sec 
+		  , min;
+
+		mil = parseInt(time % 60);
+		time = parseInt(time / 60);
+
+		sec = parseInt(time % 60);
+		time = parseInt(time / 60);
+
+		min = parseInt(time % 60);
+		time = parseInt(time / 60);
+	
+		if ( mil < 10 ) {
+			mil = '0'+mil;
+		}
+		if ( min < 10 ) {
+			min = '0'+min;
+		}
+		if ( sec < 10 ) {
+			sec = '0' + sec;
+		}
+		$('#labtime').text(min+':'+sec+':'+mil);
+	}, 10);
+}
+
+function endTimer() {
+	isStart = false;
+	clearInterval(intervalTimer);
+}
+/*
+$(window).bind('orientionchange', function(event) {
+	if(window.outerWidth > window.outerHeight) {
+		$('#rotateF').hide();
+		$('#rotateT').show();
+	} else {
+		$('#rotateT').hide();
+	$('#rotateF').show();
+	}
+	});
+$('#rotateF').hide();
+$('#rotateT').show();
+*/
+</script>
+</body>
+</html>

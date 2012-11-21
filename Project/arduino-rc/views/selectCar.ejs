@@ -1,0 +1,51 @@
+<!-- 차 선택 -->
+<div data-role="page" id="select" class="wrap">
+	<div data-role="header">
+		<h2>차종을 선택해주세요</h2>
+	</div>
+	<div data-role="content" style="background-color:white">
+	<!--
+                    to do: 사용가능한지 안한지 뿌려주는거 있어야해요~ 근데 이거 to do 어케 쓰지 ㅋㅋ
+	-->
+		<fieldset class="ui-grid-a">
+			<div class="ui-block-a" style="text-align:center">
+				<a href="/howto" data-type="horizontal" data-inline="true" onclick="selectCar('red');">
+					<img src="/images/cooper-red.jpg" width="230" height="197" alt="Cooper Red"/>
+				</a>
+			</div>
+			<div class="ui-block-b" style="text-align:center">
+				<a href="/howto" data-type="horizontal" data-inline="true" onclick="selectCar('yellow');">
+					<img src="/images/cooper-yellow.jpg" width="230" height="197" alt="Cooper Yellow"/>
+				</a>
+			</div>
+		</fieldset>
+	</div>
+	<%- partial('footer.ejs')%>
+</div>
+<script type="text/javascript">
+// TODO : TEST!!
+// Image Change Into Grayscale
+function grayscaleImage(imgObj) {
+	var canvas = document.createElement('canvas');
+	var canvasContext = canvas.getContext('2d');
+	var imgW = imgObj.width;
+	var imgH = imgObj.height;
+	canvas.width = imgW;
+	canvas.height = imgH;
+	canvasContext.drawImage(imgObj, 0, 0);
+
+	var imgPixels = canvasContext.getImageData(0, 0, imgW, imgH);
+	for(var y = 0; y < imgPixels.height; y++){
+		for(var x = 0; x < imgPixels.width; x++){
+			var i = (y * 4) * imgPixels.width + x * 4;
+			var avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
+			imgPixels.data[i] = avg;
+			imgPixels.data[i + 1] = avg;
+			imgPixels.data[i + 2] = avg;
+		}
+	}
+	canvasContext.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
+
+	return canvas.toDataURL();
+}
+</script>

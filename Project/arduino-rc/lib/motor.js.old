@@ -1,0 +1,166 @@
+
+var Moter = function (connectPort) {
+	var DDC_CAR_UP = 0xE1
+	  , DDC_CAR_DN = 0xE2
+	  , DDC_CAR_LT = 0xE3
+	  , DDC_CAR_RT = 0xE4
+	  , DDC_CAR_ST = 0xE5
+	  , DDC_CAR_CT = 0xE6;
+	 
+	var arduino = require('arduino')
+	  , board = arduino.connect(connectPort);
+
+//	var PWN = { EN1 : 6, EN2 : 5 },
+//	    DIRECTION = { IN1 : 7, IN2 : 4 };
+
+//	var HIGH = arduino.HIGH,
+//		LOW  = arduino.LOW;
+
+//	var speed = 255,
+//		leftOrRight = false,
+//		timer;
+	// Arduino Motor Shield
+	// set pin 4,5,6,7 to output mode
+//	board.pinMode(5, arduino.OUTPUT);
+//	board.pinMode(6, arduino.OUTPUT);
+//	board.pinMode(7, arduino.OUTPUT);
+//	board.pinMode(8, arduino.OUTPUT);
+
+	// Head Lights
+//	board.pinMode(10, arduino.OUTPUT); // FRONT L
+//	board.pinMode(11, arduino.OUTPUT); // FRONT R
+//	board.pinMode(12, arduino.OUTPUT); // BACK  L
+//	board.pinMode(13, arduino.OUTPUT); // BACK  R
+
+	//set pwm control, 0 for stop, and 255 for maximum speed
+//	var handleMotor = function (type, pwm, reverse) {
+//		console.log('call handleMoter');
+//		board.analogWrite(PWN['EN'+type],pwm);
+//		board.digitalWrite(DIRECTION['IN'+type], reverse ? HIGH : LOW) 
+//	};
+
+/*
+	var clearLights = function() {
+		clearInterval(timer);
+		timer = null;
+
+		board.digitalWrite(10, LOW);
+		board.digitalWrite(11, LOW);
+		board.digitalWrite(12, LOW);
+		board.digitalWrite(13, LOW);
+	};
+*/
+/*
+	var blinkLights = function(pin1, pin2) {
+		var blink = true;	
+		return setInterval(function(){
+			board.digitalWrite(pin1, blink ? HIGH : LOW);
+			board.digitalWrite(pin2, blink ? HIGH : LOW);
+			blink = !blink;
+		},1000);
+	}; 
+	var turnOnLights = function(type) {
+		clearLights();
+
+		switch(type) {
+			case 1 : {
+				board.digitalWrite(10, HIGH);
+				board.digitalWrite(11, HIGH);
+				break;
+			} // Forward Lights
+			case 2 : {
+				timer = blinkLights(12,13);
+				break;
+			} // Blink Back Lights
+			case 3 : {
+				timer = blinkLights(10,12);
+				break;
+			} // Blink Lefts
+			case 4 : {
+				timer = blinkLights(11,13);
+				break;
+			} // Blink Rights
+		}
+	};
+
+	var isMove = {
+		UP : false,
+		DN : false,
+		LT : false,
+		RT : false
+	};
+*/
+	function UP() {
+//			turnOnLights(1);
+//			handleMotor(1, 255, true);
+			board.sp.write(new Buffer([DDC_CAR_UP]), 1);
+	}
+	function DN() {
+//			turnOnLights(2);
+//			handleMotor(1, 255, false);
+			board.sp.write(new Buffer([DDC_CAR_DN]), 1);
+	}
+
+	function LT() {
+//			turnOnLights(3);
+//			handleMotor(2, 255, false);
+			board.sp.write(new Buffer([DDC_CAR_LT]), 1);
+	}
+
+	function RT() {
+//			turnOnLights(4);
+//			handleMotor(2, 255, true);
+			board.sp.write(new Buffer([DDC_CAR_RT]), 1);
+	}
+
+	function ST() {
+//			clearLights();
+//			handleMotor(1, 0, false);
+//			handleMotor(2, 0, false);
+			board.sp.write(new Buffer([DDC_CAR_ST]), 1);
+	}
+
+	function CT() {
+			board.sp.write(new Buffer([DDC_CAR_CT]), 1);
+	}
+	return {
+		"UP" : function() {
+			CT();
+			UP();
+		},
+		"DN" : function() {
+			DN();
+		},
+		"LT" : function() {
+			LT();
+		},
+		"RT" : function() {
+			RT();
+		},
+		"UL" : function() {
+			LT();
+			UP();
+		},
+		"UR" : function() {
+			RT();
+			UP();
+		},
+		"DL" : function() {
+			LT();
+			DN();
+		},
+		"DR" : function() {
+			RT();
+			DN();
+		},
+		"ST" : function() {
+			CT();
+			ST();
+		},
+		"CT" : function() {
+			CT();
+		}
+	};
+};
+
+exports.connect = Moter;

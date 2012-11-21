@@ -1,0 +1,15 @@
+	<div data-role="header">
+		<h2>이름을 입력하세요</h2>
+	</div>
+	<div data-role="content">
+		<p>결과 : <span id="result"></span></p>
+		<p>
+			<label>이름</label>
+			<input type="text" id="inputName" value="<%= nickname %>" placeholder="<%= nickname %>" />
+		</p>
+
+		<p>
+			<a href="#rank" data-role="button">순위보기</a>
+		</p>
+	</div>
+	<%- partial('footer.ejs')%>
